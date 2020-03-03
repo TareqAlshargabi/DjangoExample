@@ -1,0 +1,27 @@
+# in the command prompt
+django.admin startproject Project1 # Creating the project
+python manage.py runserver # in web browser, visit, http://127.0.0.1:8000/ to verify it worked
+# note: 8000 is the default location. Could be changed by specifying the number following 'runserver'
+python manage.py startapp polls # create an app
+# In polls/views.py, write the following python code
+from django.http import HttpResponse
+def index(request):
+    return HttpResponse("Greetings everyone! Welcome to the polls index")
+
+# To map the above to URL, create urls.py under polls:
+from django.urls import path
+from . import views
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+
+# Edit mysite/urls.py:
+from django.contrib import admin
+from django.urls import include, path
+urlpatterns = [
+    path('polls/', include('polls.urls')),
+    path('admin/', admin.site.urls),
+]
+# Verify url can view the 'index' you created by running the server and checking the web page:
+python manage.py runserver
+# Go to http://localhost:8000/polls/
